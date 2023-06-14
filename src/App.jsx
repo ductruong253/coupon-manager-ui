@@ -9,6 +9,7 @@ import ErrorPage from "./pages/Error";
 import HomePage from "./pages/Home";
 import CouponPage, { couponsLoader } from "./pages/Coupons";
 import { loader as logoutLoader } from "./pages/Logout";
+import CouponDetail, { couponDetailLoader } from "./components/CouponDetail";
 
 const router = createBrowserRouter([
   {
@@ -33,7 +34,30 @@ const router = createBrowserRouter([
             path: "",
             loader: checkAuthLoader,
             element: <Outlet></Outlet>,
-            children: [],
+            children: [
+              // {
+              //   path: "newCoupon",
+              //   element: <CouponForm />,
+              //   action: createCoupon,
+              // },
+              {
+                path: ":couponCode",
+                id: "couponDetail",
+                loader: couponDetailLoader,
+                children: [
+                  {
+                    index: true,
+                    element: <CouponDetail />,
+                  },
+                  // {
+                  //   path: "edit",
+                  //   element: <UserForm />,
+                  //   loader: userGroupLoader,
+                  //   action: updateUser,
+                  // },
+                ],
+              },
+            ],
           },
         ],
       },

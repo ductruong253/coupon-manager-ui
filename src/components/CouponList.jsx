@@ -1,5 +1,6 @@
 import Table from "react-bootstrap/Table";
 import { useLoaderData, Link } from "react-router-dom";
+import { formatDate } from "../utils/utils";
 import classes from "./CouponList.module.css";
 
 function CouponsList() {
@@ -23,14 +24,14 @@ function CouponsList() {
           <tr key={coupon.id}>
             <td className={classes.id}>{coupon.id}</td>
             <td>
-              <Link to={"" + coupon.id}>{coupon.couponCode}</Link>
+              <Link to={"" + coupon.couponCode}>{coupon.couponCode}</Link>
             </td>
             <td>{coupon.description}</td>
-            <td>{coupon.startDate}</td>
-            <td>{coupon.endDate}</td>
-            <td>{coupon.createdDate}</td>
+            <td>{formatDate(coupon.startDate)}</td>
+            <td>{formatDate(coupon.endDate)}</td>
+            <td>{formatDate(coupon.createdDate)}</td>
             <td>{coupon.approvalStatus}</td>
-            <td>{coupon.couponStatus}</td>
+            <td>{coupon.status}</td>
           </tr>
         ))}
       </tbody>
