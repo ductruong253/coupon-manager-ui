@@ -7,6 +7,8 @@ import { checkAuthLoader, tokenLoader } from "./utils/auth";
 import RootLayout from "./pages/Root";
 import ErrorPage from "./pages/Error";
 import HomePage from "./pages/Home";
+import CouponPage, { couponsLoader } from "./pages/Coupons";
+import { loader as logoutLoader } from "./pages/Logout";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +23,23 @@ const router = createBrowserRouter([
         path: "login",
         element: <AuthenticationPage />,
         action: authAction,
+      },
+      {
+        path: "coupons",
+        element: <CouponPage />,
+        loader: couponsLoader,
+        children: [
+          {
+            path: "",
+            loader: checkAuthLoader,
+            element: <Outlet></Outlet>,
+            children: [],
+          },
+        ],
+      },
+      {
+        path: "logout",
+        loader: logoutLoader,
       },
     ],
   },

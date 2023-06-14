@@ -20,21 +20,22 @@ export async function action({ request }) {
     email: data.get("email"),
     password: data.get("password"),
   };
-  console.log(authData);
   const response = await fetch("http://localhost:8082/auth/login", {
     method: "POST",
     body: JSON.stringify(authData),
+    credentials: 'include',
     headers: {
       "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true,
     },
   });
-  console.log(response);
   if (response.status === 422 || response.status === 401) {
     return response;
   }
   if (!response.ok) {
     throw json({ message: "could not authenticate" }, { status: 500 });
   }
+  console.log(response.headers.get('set-cookie'))
   const resData = await response.json();
   const token = resData.access_token;
   if (token) {
