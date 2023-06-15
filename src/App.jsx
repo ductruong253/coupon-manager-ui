@@ -10,6 +10,7 @@ import HomePage from "./pages/Home";
 import CouponPage, { couponsLoader } from "./pages/Coupons";
 import { loader as logoutLoader } from "./pages/Logout";
 import CouponDetail, { couponDetailLoader } from "./components/CouponDetail";
+import CouponForm, {createCoupon, updateCoupon} from "./components/CouponForm";
 
 const router = createBrowserRouter([
   {
@@ -35,11 +36,11 @@ const router = createBrowserRouter([
             loader: checkAuthLoader,
             element: <Outlet></Outlet>,
             children: [
-              // {
-              //   path: "newCoupon",
-              //   element: <CouponForm />,
-              //   action: createCoupon,
-              // },
+              {
+                path: "new",
+                element: <CouponForm />,
+                action: createCoupon,
+              },
               {
                 path: ":couponCode",
                 id: "couponDetail",
@@ -49,12 +50,11 @@ const router = createBrowserRouter([
                     index: true,
                     element: <CouponDetail />,
                   },
-                  // {
-                  //   path: "edit",
-                  //   element: <UserForm />,
-                  //   loader: userGroupLoader,
-                  //   action: updateUser,
-                  // },
+                  {
+                    path: "edit",
+                    element: <CouponForm />,
+                    action: updateCoupon,
+                  },
                 ],
               },
             ],

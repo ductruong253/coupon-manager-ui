@@ -1,0 +1,32 @@
+.form {
+    padding: 1rem;
+}
+
+.form h3 {
+    margin: 0.5rem;
+}
+
+.row {
+    margin: 0.5rem 0 0.5rem 0;
+}
+
+.btn_group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn {
+    margin: 0.25rem;
+}
+
+.link {
+    text-decoration: none;
+    color: white;
+}
+
+.form switch {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

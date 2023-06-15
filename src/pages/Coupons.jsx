@@ -16,7 +16,6 @@ function CouponPage() {
               className={classes.btn}
               href="/coupons/new"
             >
-              {/* <Link className={classes.link} to="/groups/newGroup">Create group</Link> */}
               New Coupon
             </Button>
           </Col>
@@ -44,6 +43,5 @@ export async function couponsLoader() {
     },
   });
   const resData = await response.json();
-  console.log(resData);
   return resData.coupons;
 }
