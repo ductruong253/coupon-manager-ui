@@ -228,21 +228,23 @@ export async function createCoupon(data) {
 
 export async function updateCoupon(data) {
   const token = getAuthToken();
-  const id = data.params.id;
+  const couponCode = data.params.couponCode;
   const formData = await data.request.formData();
   const updatedData = Object.fromEntries(formData);
   console.log(updatedData);
-  updatedData.id = parseInt(id);
-  updatedData.groupId = parseInt(updatedData.groupId);
-  const response = await fetch("http://localhost:8081/customers/id/" + id, {
+  const response = await fetch("http://localhost:8082/coupons", {
     method: "PUT",
     body: JSON.stringify(updatedData),
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
       Authorization: "Bearer " + token,
+      "Access-Control-Allow-Credentials": true,
     },
   });
   if (!response.ok) {
+    alert("Failed to update coupon: " + response.message);
+    return redirect(`/coupons/${couponCode}/update`);
   }
-  return redirect("/users");
+  return redirect("/coupons");
 }

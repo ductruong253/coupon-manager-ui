@@ -50,7 +50,7 @@ function CouponDetail() {
         </Container>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="primary" href={"./" + coupon.couponCode + "/edit"}>
+        <Button variant="primary" href={"./" + coupon.couponCode + "/update"}>
           Edit
         </Button>
         <Button variant="secondary" href="/coupons">

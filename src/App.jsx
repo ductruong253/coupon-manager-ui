@@ -51,7 +51,7 @@ const router = createBrowserRouter([
                     element: <CouponDetail />,
                   },
                   {
-                    path: "edit",
+                    path: "update",
                     element: <CouponForm />,
                     action: updateCoupon,
                   },
