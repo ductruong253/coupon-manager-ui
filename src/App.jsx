@@ -7,10 +7,15 @@ import { checkAuthLoader, tokenLoader } from "./utils/auth";
 import RootLayout from "./pages/Root";
 import ErrorPage from "./pages/Error";
 import HomePage from "./pages/Home";
-import CouponPage, { couponsLoader } from "./pages/Coupons";
+import CampaignPage, { campaignsLoader } from "./pages/Campaigns";
 import { loader as logoutLoader } from "./pages/Logout";
-import CouponDetail, { couponDetailLoader } from "./components/CouponDetail";
-import CouponForm, {createCoupon, updateCoupon} from "./components/CouponForm";
+import CampaignDetail, {
+  campaignDetailLoader,
+} from "./components/CampaignDetail";
+import CampaignForm, {
+  createCampaign,
+  updateCampaign,
+} from "./components/CampaignForm";
 
 const router = createBrowserRouter([
   {
@@ -27,9 +32,9 @@ const router = createBrowserRouter([
         action: authAction,
       },
       {
-        path: "coupons",
-        element: <CouponPage />,
-        loader: couponsLoader,
+        path: "campaigns",
+        element: <CampaignPage />,
+        loader: campaignsLoader,
         children: [
           {
             path: "",
@@ -38,22 +43,22 @@ const router = createBrowserRouter([
             children: [
               {
                 path: "new",
-                element: <CouponForm />,
-                action: createCoupon,
+                element: <CampaignForm />,
+                action: createCampaign,
               },
               {
-                path: ":couponCode",
-                id: "couponDetail",
-                loader: couponDetailLoader,
+                path: ":campaignCode",
+                id: "campaignDetail",
+                loader: campaignDetailLoader,
                 children: [
                   {
                     index: true,
-                    element: <CouponDetail />,
+                    element: <CampaignDetail />,
                   },
                   {
                     path: "update",
-                    element: <CouponForm />,
-                    action: updateCoupon,
+                    element: <CampaignForm />,
+                    action: updateCampaign,
                   },
                 ],
               },

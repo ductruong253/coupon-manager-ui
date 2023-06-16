@@ -1,10 +1,10 @@
-import CouponsList from "../components/CouponList";
+import CampaignsList from "../components/CampaignList";
 import { Col, Row, Container, Button } from "react-bootstrap";
 import { getAuthToken } from "../utils/auth";
 import { Outlet } from "react-router-dom";
-import classes from "./Coupons.module.css";
+import classes from "./Campaigns.module.css";
 
-function CouponPage() {
+function CampaignPage() {
   return (
     <>
       <Outlet></Outlet>
@@ -14,15 +14,15 @@ function CouponPage() {
             <Button
               variant="primary"
               className={classes.btn}
-              href="/coupons/new"
+              href="/campaigns/new"
             >
-              New Coupon
+              New Campaign
             </Button>
           </Col>
         </Row>
         <Row className={classes.list}>
           <Col>
-            <CouponsList />
+            <CampaignsList />
           </Col>
         </Row>
       </Container>
@@ -30,11 +30,11 @@ function CouponPage() {
   );
 }
 
-export default CouponPage;
+export default CampaignPage;
 
-export async function couponsLoader() {
+export async function campaignsLoader() {
   const token = getAuthToken();
-  const response = await fetch("http://localhost:8082/coupons", {
+  const response = await fetch("http://localhost:8082/campaigns", {
     method: "GET",
     credentials: "include",
     headers: {
@@ -43,5 +43,5 @@ export async function couponsLoader() {
     },
   });
   const resData = await response.json();
-  return resData.coupons;
+  return resData.campaigns;
 }
