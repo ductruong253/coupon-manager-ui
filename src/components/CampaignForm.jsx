@@ -10,46 +10,46 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Modal from "react-bootstrap/Modal";
 import { getAuthToken } from "../utils/auth";
-import classes from "./CouponForm.module.css";
+import classes from "./CampaignForm.module.css";
 import { useState } from "react";
 import { formatDate } from "../utils/utils";
 
-function CouponForm() {
+function CampaignForm() {
   const [isLimited, setLimited] = useState(true);
-  const [voucherLimit, setVoucherLimit] = useState("");
+  const [couponLimit, setCouponLimit] = useState("");
 
   function handleLimitStatusChange(event) {
     console.log(event.target.checked);
     setLimited(event.target.checked);
     if (!event.target.checked) {
-      setVoucherLimit("");
-      console.log(voucherLimit);
+      setCouponLimit("");
+      console.log(couponLimit);
     }
   }
 
   function handleLimitChange(event) {
-    setVoucherLimit(event.target.value);
+    setCouponLimit(event.target.value);
   }
 
-  const coupon = useRouteLoaderData("couponDetail");
+  const campaign = useRouteLoaderData("campaignDetail");
   return (
     <>
       <Modal show={true} size="lg">
         <Modal.Header>
-          {coupon ? (
-            <Modal.Title>Edit coupon</Modal.Title>
+          {campaign ? (
+            <Modal.Title>Edit campaign</Modal.Title>
           ) : (
-            <Modal.Title>Create new coupon</Modal.Title>
+            <Modal.Title>Create new campaign</Modal.Title>
           )}
         </Modal.Header>
         <FormWrapper method="post" className={classes.form}>
           <Row className={classes.row + " mb-3"}>
             <Form.Group as={Col}>
-              <Form.Label>Coupon code</Form.Label>
+              <Form.Label>Campaign code</Form.Label>
               <Form.Control
-                id="couponCode"
-                name="couponCode"
-                defaultValue={coupon ? coupon.couponCode : ""}
+                id="campaignCode"
+                name="campaignCode"
+                defaultValue={campaign ? campaign.campaignCode : ""}
               />
             </Form.Group>
             <Form.Group as={Col}>
@@ -58,7 +58,7 @@ function CouponForm() {
                 aria-label="Default select example"
                 id="type"
                 name="type"
-                defaultValue={coupon ? coupon.type : ""}
+                defaultValue={campaign ? campaign.type : ""}
               >
                 <option>Select type...</option>
 
@@ -73,14 +73,14 @@ function CouponForm() {
           </Row>
           <Row className={classes.row + " mb-3"}>
             <Form.Group as={Col}>
-              <Form.Label>Voucher limit</Form.Label>
+              <Form.Label>Coupon limit</Form.Label>
               <Form.Control
-                id="voucherLimit"
-                name="voucherLimit"
+                id="couponLimit"
+                name="couponLimit"
                 type="number"
                 onChange={handleLimitChange}
                 disabled={!isLimited}
-                defaultValue={coupon ? coupon.voucherLimit : voucherLimit}
+                defaultValue={campaign ? campaign.couponLimit : couponLimit}
               />
             </Form.Group>
             <Form.Group as={Col}>
@@ -89,7 +89,7 @@ function CouponForm() {
                 <Form.Check // prettier-ignore
                   type="switch"
                   id="useLimit"
-                  label="Set coupon limit"
+                  label="Set campaign limit"
                   checked={isLimited}
                   onChange={handleLimitStatusChange}
                 />
@@ -105,7 +105,7 @@ function CouponForm() {
                 as="input"
                 type="datetime-local"
                 defaultValue={
-                  coupon ? formatDate(coupon.startDate, "PICKER") : ""
+                  campaign ? formatDate(campaign.startDate, "PICKER") : ""
                 }
               />
             </Form.Group>
@@ -117,7 +117,7 @@ function CouponForm() {
                 as="input"
                 type="datetime-local"
                 defaultValue={
-                  coupon ? formatDate(coupon.endDate, "PICKER") : ""
+                  campaign ? formatDate(campaign.endDate, "PICKER") : ""
                 }
               />
             </Form.Group>
@@ -129,7 +129,7 @@ function CouponForm() {
                 id="conditions"
                 name="conditions"
                 as="textarea"
-                defaultValue={coupon ? coupon.conditions : ""}
+                defaultValue={campaign ? campaign.conditions : ""}
               />
             </Form.Group>
           </Row>
@@ -140,7 +140,7 @@ function CouponForm() {
                 id="description"
                 name="description"
                 as="textarea"
-                defaultValue={coupon ? coupon.description : ""}
+                defaultValue={campaign ? campaign.description : ""}
               />
             </Form.Group>
           </Row>
@@ -152,7 +152,7 @@ function CouponForm() {
                 name="discountPercent"
                 as="input"
                 type="number"
-                defaultValue={coupon ? coupon.discountPercent : ""}
+                defaultValue={campaign ? campaign.discountPercent : ""}
               />
             </Form.Group>
             <Form.Group as={Col}>
@@ -162,7 +162,7 @@ function CouponForm() {
                 name="maxDiscountValue"
                 as="input"
                 type="number"
-                defaultValue={coupon ? coupon.maxDiscountValue : ""}
+                defaultValue={campaign ? campaign.maxDiscountValue : ""}
               />
             </Form.Group>
             <Form.Group as={Col}>
@@ -171,7 +171,7 @@ function CouponForm() {
                 aria-label="Default select example"
                 id="unit"
                 name="unit"
-                defaultValue={coupon ? coupon.unit : ""}
+                defaultValue={campaign ? campaign.unit : ""}
               >
                 <option>Select unit...</option>
 
@@ -189,7 +189,7 @@ function CouponForm() {
               Submit
             </Button>
             <Button variant="secondary" className={classes.btn}>
-              <Link className={classes.link} to="/coupons">
+              <Link className={classes.link} to="/campaigns">
                 Cancel
               </Link>
             </Button>
@@ -200,13 +200,13 @@ function CouponForm() {
   );
 }
 
-export default CouponForm;
+export default CampaignForm;
 
-export async function createCoupon(data) {
+export async function createCampaign(data) {
   const token = getAuthToken();
   const formData = await data.request.formData();
   const postData = Object.fromEntries(formData);
-  const response = await fetch("http://localhost:8082/coupons", {
+  const response = await fetch("http://localhost:8082/campaigns", {
     method: "POST",
     body: JSON.stringify(postData),
     credentials: "include",
@@ -218,21 +218,21 @@ export async function createCoupon(data) {
   });
   const resp = await response.json();
   if (!response.ok) {
-    alert("Failed to create coupon: " + resp.message);
-    return redirect("/coupons/new");
+    alert("Failed to create campaign: " + resp.message);
+    return redirect("/campaigns/new");
   } else {
     alert("Success!");
-    return redirect("/coupons");
+    return redirect("/campaigns");
   }
 }
 
-export async function updateCoupon(data) {
+export async function updateCampaign(data) {
   const token = getAuthToken();
-  const couponCode = data.params.couponCode;
+  const campaignCode = data.params.campaignCode;
   const formData = await data.request.formData();
   const updatedData = Object.fromEntries(formData);
   console.log(updatedData);
-  const response = await fetch("http://localhost:8082/coupons", {
+  const response = await fetch("http://localhost:8082/campaigns", {
     method: "PUT",
     body: JSON.stringify(updatedData),
     credentials: "include",
@@ -243,8 +243,8 @@ export async function updateCoupon(data) {
     },
   });
   if (!response.ok) {
-    alert("Failed to update coupon: " + response.message);
-    return redirect(`/coupons/${couponCode}/update`);
+    alert("Failed to update campaign: " + response.message);
+    return redirect(`/campaigns/${campaignCode}/update`);
   }
-  return redirect("/coupons");
+  return redirect("/campaigns");
 }
